@@ -184,6 +184,7 @@ public class CalculatorUI {
         // ADD TO FRAME +++++++++++++++++++
         frame.add(sidePanel, constraint);
         // ADD TO FRAME +++++++++++++++++++
+        frame.revalidate();
     }
 
     public void addInterfaceEventListeners(ActionListener listener) {
