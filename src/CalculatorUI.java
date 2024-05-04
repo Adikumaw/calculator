@@ -7,7 +7,7 @@ public class CalculatorUI {
     private final JFrame frame;
     private final JLabel displayLabel;
     private final JTextField inputField;
-    private final Font myFont = new Font("Roboto", Font.PLAIN, 20);
+    private final Font myFont = new Font("Times new Roman", Font.PLAIN, 20);
     public final Color WHITE = new Color(252, 252, 252);
     public final Color DARKBLACK = new Color(27, 30, 32);
     public final Color GRAY = new Color(42, 46, 50);
