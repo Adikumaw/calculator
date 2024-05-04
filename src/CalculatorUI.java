@@ -7,218 +7,196 @@ public class CalculatorUI {
     private final JFrame frame;
     private final JLabel displayLabel;
     private final JTextField inputField;
+    private final Font myFont = new Font("Roboto", Font.PLAIN, 20);
+    public final Color WHITE = new Color(252, 252, 252);
+    public final Color DARKBLACK = new Color(27, 30, 32);
+    public final Color GRAY = new Color(42, 46, 50);
+    public final Color LIGHTGRAY = new Color(49, 54, 59);
+    public final Color BLUE = new Color(57, 135, 176);
 
-    private final JButton clearButton;
-    private final JButton deleteButton;
-    private final JButton multiplyButton;
-    private final JButton divideButton;
+    private final JButton[] numericButtons = new JButton[10];
+    private final JButton[] symbolicButtons = new JButton[8];
 
-    private final JButton sevenButton;
-    private final JButton eightButton;
-    private final JButton nineButton;
-    private final JButton subtractButton;
-
-    private final JButton fourButton;
-    private final JButton fiveButton;
-    private final JButton sixButton;
-    private final JButton addButton;
-
-    private final JButton oneButton;
-    private final JButton twoButton;
-    private final JButton threeButton;
-    private final JButton equalsButton;
-
-    private final JButton zeroButton;
-    private final JButton decimalButton;
-    private final JButton doubleZeroButton;
+    private final JButton clearButton, deleteButton, multiplyButton, divideButton;
+    private final JButton subtractButton, addButton, equalsButton, decimalButton;
 
     private final Calculator calculator;
 
     public CalculatorUI(Calculator calculator) {
         this.calculator = calculator;
 
+        // ----------------------------------------------------------------
+        // CREATE FRAME
+        // ----------------------------------------------------------------
         frame = new JFrame("Calculator");
+        frame.getContentPane().setBackground(GRAY);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLayout(new GridLayout(7, 4, 5, 5));
-        frame.setSize(320, 450);
+        frame.setResizable(true);
+        frame.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        frame.setSize(350, 510);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        displayLabel = new JLabel("hello world");
+        // ----------------------------------------------------------------
+        // CREATE LABLE
+        // ----------------------------------------------------------------
+        displayLabel = new JLabel("");
         displayLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        displayLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        GridBagConstraints constraint = new GridBagConstraints();
-        constraint.gridx = 0;
+        displayLabel.setFont(myFont);
+        displayLabel.setForeground(WHITE);
+        constraint.fill = GridBagConstraints.BOTH;
+        constraint.insets = new Insets(5, 5, 5, 5);
         constraint.gridy = 0;
-        constraint.gridwidth = 3;
+        constraint.weightx = 1.0;
+        constraint.weighty = 0.05;
+        constraint.gridwidth = 2;
+        // ADD TO FRAME +++++++++++++++++++
         frame.add(displayLabel, constraint);
+        // ADD TO FRAME +++++++++++++++++++
 
-        inputField = new JTextField();
+        // ----------------------------------------------------------------
+        // CREATE TEXT FIELD
+        // ----------------------------------------------------------------
+        inputField = new JTextField("0");
         inputField.setEditable(false);
-        inputField.setFont(new Font("Arial", Font.PLAIN, 20));
+        inputField.setFont(myFont);
+        inputField.setBackground(DARKBLACK);
+        inputField.setForeground(WHITE);
         inputField.setHorizontalAlignment(SwingConstants.RIGHT);
-        constraint.gridx = 0;
         constraint.gridy = 1;
-        constraint.gridwidth = 3;
+        constraint.weighty = 0.2;
+        // ADD TO FRAME +++++++++++++++++++
         frame.add(inputField, constraint);
+        // ADD TO FRAME +++++++++++++++++++
 
-        clearButton = new JButton("C");
-        clearButton.addActionListener(calculator);
-        constraint.gridx = 0;
+        // Buttons Initialization --------------------------------------------------
+        symbolicButtons[0] = clearButton = new JButton("C");
+        symbolicButtons[1] = deleteButton = new JButton("Del");
+        symbolicButtons[2] = multiplyButton = new JButton("*");
+        symbolicButtons[3] = decimalButton = new JButton(".");
+        symbolicButtons[4] = divideButton = new JButton("/");
+        symbolicButtons[5] = subtractButton = new JButton("-");
+        symbolicButtons[6] = addButton = new JButton("+");
+        symbolicButtons[7] = equalsButton = new JButton("=");
+
+        for (Integer i = 0; i < numericButtons.length; i++) {
+            numericButtons[i] = new JButton(i.toString());
+            numericButtons[i].addActionListener(calculator);
+            numericButtons[i].setFont(myFont);
+            numericButtons[i].setFocusable(false);
+            numericButtons[i].setBackground(LIGHTGRAY);
+            numericButtons[i].setForeground(WHITE);
+        }
+        for (int i = 0; i < symbolicButtons.length; i++) {
+            symbolicButtons[i].addActionListener(calculator);
+            symbolicButtons[i].setFont(myFont);
+            symbolicButtons[i].setFocusable(false);
+            symbolicButtons[i].setBackground(LIGHTGRAY);
+            symbolicButtons[i].setForeground(WHITE);
+        }
+        // Buttons Initialization end --------------------------------------------------
+
+        // -------------------------------------------------------------------------
+        // CREATE MAIN PANEL
+        // -------------------------------------------------------------------------
+        JPanel panel = new JPanel();
+        panel.setBackground(GRAY);
+        panel.setLayout(new GridBagLayout());
+        constraint.insets = new Insets(5, 5, 5, 0);
         constraint.gridy = 2;
-        constraint.gridwidth = 0;
-        frame.add(clearButton, constraint);
+        constraint.weightx = 0.75;
+        constraint.weighty = 0.75;
+        constraint.gridwidth = 1;
+        GridBagConstraints MainPanelConstraint = new GridBagConstraints();
 
-        deleteButton = new JButton("DEL");
-        deleteButton.addActionListener(calculator);
-        constraint.gridx = 1;
-        constraint.gridy = 2;
-        constraint.gridwidth = 0;
-        frame.add(deleteButton, constraint);
+        // Universal constraint -------------------------------->>>>>>>>
+        MainPanelConstraint.fill = GridBagConstraints.BOTH;
+        MainPanelConstraint.insets = new Insets(3, 3, 3, 3);
+        MainPanelConstraint.weightx = 1.0;
+        MainPanelConstraint.weighty = 1.0;
+        // Universal constraint -------------------------------->>>>>>>>
 
-        multiplyButton = new JButton("*");
-        multiplyButton.addActionListener(calculator);
-        constraint.gridx = 2;
-        constraint.gridy = 2;
-        constraint.gridwidth = 0;
-        frame.add(multiplyButton, constraint);
+        // first row of main panel -------------------------------->>>>>>>
+        MainPanelConstraint.gridy = 0;
+        MainPanelConstraint.ipadx = 20; // to give it same width as the delete button
+        panel.add(clearButton, MainPanelConstraint);
+        MainPanelConstraint.ipadx = 0;
+        panel.add(deleteButton, MainPanelConstraint);
+        MainPanelConstraint.ipadx = 20; // to give it same width as the delete button
+        panel.add(multiplyButton, MainPanelConstraint);
+        // Second row of main panel -------------------------------->>>>>>>
+        MainPanelConstraint.gridy = 1;
+        panel.add(numericButtons[7], MainPanelConstraint);
+        panel.add(numericButtons[8], MainPanelConstraint);
+        panel.add(numericButtons[9], MainPanelConstraint);
+        // Third row of main panel -------------------------------->>>>>>>
+        MainPanelConstraint.gridy = 2;
+        panel.add(numericButtons[4], MainPanelConstraint);
+        panel.add(numericButtons[5], MainPanelConstraint);
+        panel.add(numericButtons[6], MainPanelConstraint);
+        // Fourth row of main panel -------------------------------->>>>>>>
+        MainPanelConstraint.gridy = 3;
+        panel.add(numericButtons[1], MainPanelConstraint);
+        panel.add(numericButtons[2], MainPanelConstraint);
+        panel.add(numericButtons[3], MainPanelConstraint);
+        // Fifth row of main panel -------------------------------->>>>>>>
+        MainPanelConstraint.gridy = 4;
+        MainPanelConstraint.gridwidth = 2;
+        panel.add(numericButtons[0], MainPanelConstraint);
+        MainPanelConstraint.gridwidth = 1;
+        panel.add(decimalButton, MainPanelConstraint);
+        // ADD TO FRAME +++++++++++++++++++
+        frame.add(panel, constraint);
+        // ADD TO FRAME +++++++++++++++++++
 
-        divideButton = new JButton("/");
-        divideButton.addActionListener(calculator);
-        constraint.gridx = 3;
-        constraint.gridy = 2;
-        constraint.gridwidth = 0;
-        frame.add(divideButton, constraint);
+        // -------------------------------------------------------------------------
+        // CREATE SIDE PANEL
+        // -------------------------------------------------------------------------
+        JPanel sidePanel = new JPanel();
+        sidePanel.setBackground(GRAY);
+        sidePanel.setLayout(new GridBagLayout());
+        GridBagConstraints sidePanelConstraint = new GridBagConstraints();
+        constraint.insets = new Insets(5, 0, 5, 5);
+        constraint.weightx = 0.25;
 
-        sevenButton = new JButton("7");
-        sevenButton.addActionListener(calculator);
-        constraint.gridx = 0;
-        constraint.gridy = 3;
-        constraint.gridwidth = 0;
-        frame.add(sevenButton, constraint);
+        // Universal constraint -------------------------------->>>>>>>>
+        sidePanelConstraint.fill = GridBagConstraints.BOTH;
+        sidePanelConstraint.insets = new Insets(3, 3, 3, 3);
+        sidePanelConstraint.weightx = 1.0;
+        sidePanelConstraint.weighty = 1.0;
+        // Universal constraint -------------------------------->>>>>>>>
 
-        eightButton = new JButton("8");
-        eightButton.addActionListener(calculator);
-        constraint.gridx = 1;
-        constraint.gridy = 3;
-        constraint.gridwidth = 0;
-        frame.add(eightButton, constraint);
+        // First row of side panel -------------------------------->>>>>>>
+        sidePanelConstraint.gridy = 0;
+        sidePanel.add(divideButton, sidePanelConstraint);
+        // Second row of side panel -------------------------------->>>>>>>
+        sidePanelConstraint.gridy = 1;
+        sidePanelConstraint.ipady = 1;
+        sidePanel.add(subtractButton, sidePanelConstraint);
+        // Third row of side panel -------------------------------->>>>>>>
+        sidePanelConstraint.gridy = 2;
+        sidePanelConstraint.ipady = 0;
+        sidePanel.add(addButton, sidePanelConstraint);
+        // Fourth row of side panel -------------------------------->>>>>>>
+        sidePanelConstraint.gridy = 3;
+        sidePanelConstraint.weighty = 2.0;
+        sidePanelConstraint.ipady = 45;
+        sidePanel.add(equalsButton, sidePanelConstraint);
 
-        nineButton = new JButton("9");
-        nineButton.addActionListener(calculator);
-        constraint.gridx = 2;
-        constraint.gridy = 3;
-        constraint.gridwidth = 0;
-        frame.add(nineButton, constraint);
-
-        subtractButton = new JButton("-");
-        subtractButton.addActionListener(calculator);
-        constraint.gridx = 3;
-        constraint.gridy = 3;
-        constraint.gridwidth = 0;
-        frame.add(subtractButton, constraint);
-
-        fourButton = new JButton("4");
-        fourButton.addActionListener(calculator);
-        constraint.gridx = 0;
-        constraint.gridy = 4;
-        constraint.gridwidth = 0;
-        frame.add(fourButton, constraint);
-
-        fiveButton = new JButton("5");
-        fiveButton.addActionListener(calculator);
-        constraint.gridx = 1;
-        constraint.gridy = 4;
-        constraint.gridwidth = 0;
-        frame.add(fiveButton, constraint);
-
-        sixButton = new JButton("6");
-        sixButton.addActionListener(calculator);
-        constraint.gridx = 2;
-        constraint.gridy = 4;
-        constraint.gridwidth = 0;
-        frame.add(sixButton, constraint);
-
-        addButton = new JButton("+");
-        addButton.addActionListener(calculator);
-        constraint.gridx = 3;
-        constraint.gridy = 4;
-        constraint.gridwidth = 0;
-        frame.add(addButton, constraint);
-
-        oneButton = new JButton("1");
-        oneButton.addActionListener(calculator);
-        constraint.gridx = 0;
-        constraint.gridy = 5;
-        constraint.gridwidth = 0;
-        frame.add(oneButton, constraint);
-
-        twoButton = new JButton("2");
-        twoButton.addActionListener(calculator);
-        constraint.gridx = 1;
-        constraint.gridy = 5;
-        constraint.gridwidth = 0;
-        frame.add(twoButton, constraint);
-
-        threeButton = new JButton("3");
-        threeButton.addActionListener(calculator);
-        constraint.gridx = 2;
-        constraint.gridy = 5;
-        constraint.gridwidth = 0;
-        frame.add(threeButton, constraint);
-
-        equalsButton = new JButton("=");
-        equalsButton.addActionListener(calculator);
-        constraint.gridx = 3;
-        constraint.gridy = 5;
-        constraint.gridwidth = 0;
-        frame.add(equalsButton, constraint);
-
-        zeroButton = new JButton("0");
-        zeroButton.addActionListener(calculator);
-        constraint.gridx = 0;
-        constraint.gridy = 6;
-        constraint.gridwidth = 0;
-        frame.add(zeroButton, constraint);
-
-        decimalButton = new JButton(".");
-        decimalButton.addActionListener(calculator);
-        constraint.gridx = 1;
-        constraint.gridy = 6;
-        constraint.gridwidth = 0;
-        frame.add(decimalButton, constraint);
-
-        doubleZeroButton = new JButton("00");
-        doubleZeroButton.addActionListener(calculator);
-        constraint.gridx = 2;
-        constraint.gridy = 6;
-        constraint.gridwidth = 0;
-        frame.add(doubleZeroButton, constraint);
-
+        // ADD TO FRAME +++++++++++++++++++
+        frame.add(sidePanel, constraint);
+        // ADD TO FRAME +++++++++++++++++++
     }
 
     public void addInterfaceEventListeners(ActionListener listener) {
         // Add event listeners to all buttons using the provided listener
-        clearButton.addActionListener(listener);
-        deleteButton.addActionListener(listener);
-        multiplyButton.addActionListener(listener);
-        divideButton.addActionListener(listener);
-        sevenButton.addActionListener(listener);
-        eightButton.addActionListener(listener);
-        nineButton.addActionListener(listener);
-        subtractButton.addActionListener(listener);
-        fourButton.addActionListener(listener);
-        fiveButton.addActionListener(listener);
-        sixButton.addActionListener(listener);
-        addButton.addActionListener(listener);
-        oneButton.addActionListener(listener);
-        twoButton.addActionListener(listener);
-        threeButton.addActionListener(listener);
-        equalsButton.addActionListener(listener);
-        zeroButton.addActionListener(listener);
-        decimalButton.addActionListener(listener);
-        doubleZeroButton.addActionListener(listener);
+        for (int i = 0; i < symbolicButtons.length; i++) {
+            symbolicButtons[i].addActionListener(listener);
+        }
+        for (int i = 0; i < numericButtons.length; i++) {
+            numericButtons[i].addActionListener(listener);
+        }
     }
 
     public JButton getClearButton() {
@@ -250,7 +228,7 @@ public class CalculatorUI {
     }
 
     public void appendDigit(String digit) {
-        setInputText((getInputText().equals("0") || getInputText().equals("00")) ? digit : getInputText() + digit);
+        setInputText(getInputText().equals("0") ? digit : getInputText() + digit);
     }
 
     public void deleteLastDigit() {

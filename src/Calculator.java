@@ -16,15 +16,6 @@ public class Calculator implements ActionListener {
         logic = new CalculatorLogic();
     }
 
-    private void createInterface() {
-        // This method is no longer needed as UI initialization is handled in
-        // CalculatorUI
-    }
-
-    private void addInterfaceComponents() {
-        // This method is no longer needed as UI components are added in CalculatorUI
-    }
-
     private void addInterfaceEventListeners() {
         ui.addInterfaceEventListeners(this); // Delegate event handling to the UI
     }
