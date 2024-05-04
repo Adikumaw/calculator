@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 public class CalculatorUI {
 
@@ -20,10 +22,7 @@ public class CalculatorUI {
     private final JButton clearButton, deleteButton, multiplyButton, divideButton;
     private final JButton subtractButton, addButton, equalsButton, decimalButton;
 
-    private final Calculator calculator;
-
-    public CalculatorUI(Calculator calculator) {
-        this.calculator = calculator;
+    public CalculatorUI() {
 
         // ----------------------------------------------------------------
         // CREATE FRAME
@@ -82,14 +81,12 @@ public class CalculatorUI {
 
         for (Integer i = 0; i < numericButtons.length; i++) {
             numericButtons[i] = new JButton(i.toString());
-            numericButtons[i].addActionListener(calculator);
             numericButtons[i].setFont(myFont);
             numericButtons[i].setFocusable(false);
             numericButtons[i].setBackground(LIGHTGRAY);
             numericButtons[i].setForeground(WHITE);
         }
         for (int i = 0; i < symbolicButtons.length; i++) {
-            symbolicButtons[i].addActionListener(calculator);
             symbolicButtons[i].setFont(myFont);
             symbolicButtons[i].setFocusable(false);
             symbolicButtons[i].setBackground(LIGHTGRAY);
@@ -205,6 +202,22 @@ public class CalculatorUI {
 
     public JButton getDeleteButton() {
         return deleteButton;
+    }
+
+    public JButton getMultiplyButton() {
+        return multiplyButton;
+    }
+
+    public JButton getDivideButton() {
+        return divideButton;
+    }
+
+    public JButton getSubtractButton() {
+        return subtractButton;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
     }
 
     public JButton getDecimalButton() {

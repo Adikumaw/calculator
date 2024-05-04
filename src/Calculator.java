@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 
 public class Calculator implements ActionListener {
 
-    private double input, result;
-    private String operation;
+    private String expression, result;
 
     private CalculatorUI ui;
     private CalculatorLogic logic;
 
     public Calculator() {
-        ui = new CalculatorUI(this);
+        ui = new CalculatorUI();
         logic = new CalculatorLogic();
+        addInterfaceEventListeners();
     }
 
     private void addInterfaceEventListeners() {
@@ -22,29 +22,44 @@ public class Calculator implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Extract action event source from the event
         Object source = e.getSource();
 
+        // Handle clear button ---------------------------------------------
         if (source == ui.getClearButton()) {
             ui.clearInput();
-        } else if (source == ui.getDeleteButton()) {
+        } // Handle Delete button ------------------------------------------
+        else if (source == ui.getDeleteButton()) {
             ui.deleteLastDigit();
-        } else if (source instanceof JButton digitButton) {
-            ui.appendDigit(((JButton) source).getText());
-        } else if (source == ui.getDecimalButton()) {
+        } // Handle decimal "." button -------------------------------------
+        else if (source == ui.getDecimalButton()) {
             ui.addDecimal();
-        } else if (source instanceof JButton operatorButton) {
-            String operator = ((JButton) source).getText();
-            operation = operator;
-            input = Double.parseDouble(ui.getInputText());
+        } // Handle clear button -------------------------------------------
+        else if (source == ui.getMultiplyButton() || source == ui.getDivideButton()
+                || source == ui.getAddButton() || source == ui.getSubtractButton()) {
+            expression = ui.getInputText();
+            char lastChar = expression.charAt(expression.length() - 1);
+            // do not append if last character is already any operator
+            if (lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/') {
+                expression = expression.substring(0, expression.length() - 1) + ((JButton) source).getText();
+                ui.setInputText(expression);
+            } else {
+                ui.appendDigit(((JButton) source).getText());
+            }
+            result = logic.calculate(expression);
+            ui.setDisplayText(result);
+        } // Handle equals button ------------------------------------------
+        else if (source == ui.getEqualsButton()) {
+            result = logic.calculate(expression);
             ui.clearInput();
-            ui.setDisplayText(ui.getInputText() + operator);
-        } else if (source == ui.getEqualsButton()) {
-            double secondNumber = Double.parseDouble(ui.getInputText());
-            result = logic.calculate(input, secondNumber, operation);
-            ui.clearInput();
-            ui.setDisplayText(String.valueOf(result));
-            operation = "";
+            ui.setDisplayText(expression);
+            ui.setInputText(result);
+            expression = result;
+        } // Handle numeric buttons ----------------------------------------
+        else if (source instanceof JButton) {
+            ui.appendDigit(((JButton) source).getText());
         }
+        System.out.println(expression);
     }
 
     public static void main(String[] args) {
