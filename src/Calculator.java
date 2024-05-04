@@ -37,29 +37,64 @@ public class Calculator implements ActionListener {
         } // Handle clear button -------------------------------------------
         else if (source == ui.getMultiplyButton() || source == ui.getDivideButton()
                 || source == ui.getAddButton() || source == ui.getSubtractButton()) {
+
             expression = ui.getInputText();
-            char lastChar = expression.charAt(expression.length() - 1);
-            // do not append if last character is already any operator
-            if (lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/') {
-                expression = expression.substring(0, expression.length() - 1) + ((JButton) source).getText();
-                ui.setInputText(expression);
-            } else {
-                ui.appendDigit(((JButton) source).getText());
+            if (expression.length() == 1 && expression.charAt(0) == '0') {
+                expression = "";
             }
-            result = logic.calculate(expression);
-            ui.setDisplayText(result);
+            String operator = ((JButton) source).getText();
+
+            if (expression.length() == 0) {
+                if (operator.equals("-")) {
+                    ui.setInputText(((JButton) source).getText());
+                }
+            } else if (expression.length() == 1) {
+
+                char lastChar = expression.charAt(expression.length() - 1);
+                if (lastChar != '-') {
+                    ui.appendDigit(((JButton) source).getText());
+                }
+            } else if (expression.length() > 1) {
+
+                char lastChar = expression.charAt(expression.length() - 1);
+                // do not append if last character is already any operator
+                if (lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/') {
+                    if (operator == "-") {
+                        if (lastChar == '*' || lastChar == '/') {
+                            ui.appendDigit(((JButton) source).getText());
+                            return;
+                        }
+                    } else if (lastChar == '-' && expression.charAt(expression.length() - 2) == '*'
+                            || expression.charAt(expression.length() - 2) == '/') {
+                    } else {
+                        expression = expression.substring(0, expression.length() - 1);
+                        ui.setInputText(expression + ((JButton) source).getText());
+                    }
+                } else {
+                    ui.appendDigit(((JButton) source).getText());
+                    result = logic.calculate(expression);
+                    ui.setDisplayText(result);
+                }
+            }
         } // Handle equals button ------------------------------------------
         else if (source == ui.getEqualsButton()) {
+            expression = ui.getInputText();
+            char lastChar = expression.charAt(expression.length() - 1);
+            if (lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/') {
+                expression = expression.substring(0, expression.length() - 1);
+            }
             result = logic.calculate(expression);
-            ui.clearInput();
             ui.setDisplayText(expression);
             ui.setInputText(result);
             expression = result;
         } // Handle numeric buttons ----------------------------------------
         else if (source instanceof JButton) {
             ui.appendDigit(((JButton) source).getText());
+            expression = ui.getInputText();
+            result = logic.calculate(expression);
+            ui.setDisplayText(result);
         }
-        System.out.println(expression);
+        // System.out.println(expression);
     }
 
     public static void main(String[] args) {

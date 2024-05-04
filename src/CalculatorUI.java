@@ -237,7 +237,7 @@ public class CalculatorUI {
     }
 
     public void clearInput() {
-        setInputText("");
+        setInputText("0");
     }
 
     public void appendDigit(String digit) {
@@ -245,12 +245,20 @@ public class CalculatorUI {
     }
 
     public void deleteLastDigit() {
-        if (getInputText().length() > 0)
+        if (getInputText().length() == 1) {
+            setInputText("0");
+        } else if (getInputText().length() > 0)
             setInputText(getInputText().substring(0, getInputText().length() - 1));
     }
 
     public void addDecimal() {
-        if (!getInputText().contains(".")) {
+        String input = getInputText();
+        String[] operands = input.split("[+,-,*,/]");
+        char last = input.charAt(input.length() - 1);
+
+        if (!operands[operands.length - 1].contains(".")) {
+            setInputText(getInputText() + ".");
+        } else if (last == '*' || last == '/' || last == '+' || last == '-') {
             setInputText(getInputText() + ".");
         }
     }
