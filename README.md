@@ -2,16 +2,54 @@
 
 This project is a dark-themed calculator built using Java and Swing. It features a fully responsive user interface, capable of performing multiple operations simultaneously with real-time result display. The code is organized into three distinct files: `Calculator`, `Logic`, and `UI`, ensuring a clean and maintainable structure.
 
-## Folder Structure
+## Features
 
-The workspace contains two folders by default, where:
+- **Dark-Themed UI**: A sleek, modern look with a dark color scheme, easy on the eyes.
+- **Responsive Design**: The user interface is fully responsive, adapting to different screen sizes and resolutions.
+- **Real-Time Results**: Results are displayed in real-time as you input your calculations.
+- **Multiple Operations**: Supports multiple mathematical operations in a single input.
+- **Clean Code Structure**: The code is organized into three files:
+  - `Calculator.java`: The main class that ties everything together.
+  - `Logic.java`: Handles the core functionality and mathematical operations.
+  - `UI.java`: Manages the user interface components and user interactions.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Technologies Used
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- Java
+- Swing (Java's GUI toolkit)
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Demo
+
+https://github.com/user-attachments/assets/5ec8c25e-b886-4117-958f-ee0a5a13a778
+
+## Setup and Installation
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/YourUsername/java-swing-calculator.git
+   cd java-swing-calculator
+   ```
+
+2. **Compile the Code**  
+   Use a Java compiler to compile the `.java` files:
+
+   ```bash
+   javac src/Calculator.java src/CalculatorLogic.java src/CalculatorUI.java -d bin
+   cd bin
+   ```
+
+3. **Run the Calculator**  
+   Execute the compiled `Calculator` class:
+   ```bash
+   java --enable-preview Calculator
+   ```
+
+## Usage
+
+- **Basic Operations**: Perform standard arithmetic operations like addition, subtraction, multiplication, and division.
+- **Real-Time Calculations**: View results in real-time as you type in numbers and operations.
+- **Multiple Operations**: Input a sequence of operations to see the result computed in one go.
 
 ## Customization
 
