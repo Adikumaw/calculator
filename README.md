@@ -18,10 +18,9 @@ This project is a dark-themed calculator built using Java and Swing. It features
 - Java
 - Swing (Java's GUI toolkit)
 
-## Screenshots
+## Demo
 
-![Calculator Screenshot](path_to_calculator_screenshot.png)
-*Screenshot of the dark-themed calculator UI.*
+https://github.com/user-attachments/assets/5ec8c25e-b886-4117-958f-ee0a5a13a778
 
 ## Setup and Installation
 
@@ -34,13 +33,14 @@ This project is a dark-themed calculator built using Java and Swing. It features
 2. **Compile the Code**  
    Use a Java compiler to compile the `.java` files:
    ```bash
-   javac Calculator.java
+   javac src/Calculator.java src/CalculatorLogic.java src/CalculatorUI.java -d bin
+   cd bin
    ```
 
 3. **Run the Calculator**  
    Execute the compiled `Calculator` class:
    ```bash
-   java Calculator
+   java --enable-preview Calculator
    ```
 
 ## Usage
